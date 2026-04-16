@@ -1,10 +1,10 @@
 import { APPS, TAG_MAP } from './data';
 
 // ── RECOMMENDATION ENGINE ────────────────────────────────────────────────────
-// Always returns exactly 3 apps:
-//   Slots 1-2 → top 2 required apps (CleanMyMac, Bartender, iStat, CleanShot X, Paste)
-//              ranked by how well they match the user's answers
-//   Slot 3    → best-matching app from the full pool (any app)
+// Always returns exactly 5 apps:
+//   Slot 1   → CleanMyMac (always)
+//   Slot 2   → best matching app from featured 5 (Paste, iStat Menus, Downie, CleanShot X, Bartender)
+//   Slots 3-5 → best matching apps from the full catalog
 
 export function recommend(q1, q2, q3) {
   const allTags = new Set();
@@ -17,25 +17,22 @@ export function recommend(q1, q2, q3) {
     score: a.tags.filter((t) => allTags.has(t)).length,
   })).sort((a, b) => b.score - a.score);
 
-  // Top 2 required apps by relevance
-  const reqSorted = scored.filter((a) => a.required);
-  const req1 = reqSorted[0];
-  const req2 = reqSorted[1];
-  const seen = new Set([req1.name, req2.name]);
-  const stack = [req1, req2];
+  // Slot 1: CleanMyMac (always)
+  const cleanMyMac = APPS.find((a) => a.name === 'CleanMyMac');
+  const seen = new Set(['CleanMyMac']);
+  const stack = [{ ...cleanMyMac, score: 0 }];
 
-  // Best-matching non-required app
-  for (const a of scored) {
-    if (!seen.has(a.name)) { seen.add(a.name); stack.push(a); break; }
-  }
+  // Slot 2: best matching featured app (excluding CleanMyMac)
+  const featured = scored.find((a) => a.required && a.name !== 'CleanMyMac');
+  if (featured) { seen.add(featured.name); stack.push(featured); }
 
-  // Fallback: ensure we always have 3
+  // Slots 3-5: best matching apps from full catalog
   for (const a of scored) {
-    if (stack.length >= 3) break;
+    if (stack.length >= 5) break;
     if (!seen.has(a.name)) { seen.add(a.name); stack.push(a); }
   }
 
-  return stack.slice(0, 3);
+  return stack.slice(0, 5);
 }
 
 // ── PAIN NARRATIVE ────────────────────────────────────────────────────────────

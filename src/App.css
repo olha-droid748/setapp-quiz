@@ -220,12 +220,9 @@ h1 {
   width: 56px;
   height: 56px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #FF00AA, #FF80D5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
   margin-bottom: 24px;
+  display: block;
+  object-fit: cover;
 }
 
 /* Divider */

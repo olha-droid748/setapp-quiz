@@ -43,6 +43,14 @@ export const APPS = [
     logo: ic("Paste"),
     required: true,
   },
+  {
+    name: "Downie",
+    url: "https://setapp.com/apps/downie",
+    reason: "Save videos from YouTube, Vimeo, and hundreds of other sites in one click — no browser extensions, no fuss.",
+    tags: ["creative","video","content","media","research","entertainment","download","files","productivity","efficiency","study","learning","capture","output","visual","remote"],
+    logo: ic("Downie"),
+    required: true,
+  },
 
   // ── EXTENDED POOL ──────────────────────────────────────────────────────────
   {

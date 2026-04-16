@@ -96,7 +96,11 @@ export default function App() {
         {/* ── INTRO ── */}
         {step === 0 && (
           <div>
-            <div className="iicon">⚙️</div>
+            <img
+              className="iicon"
+              src="https://raw.githubusercontent.com/olha-droid748/icons/refs/heads/main/Setapp%20Icon%2C%20Default%2C%20512%C3%97512.png"
+              alt="Setapp"
+            />
             <h1>Let's build your perfect Mac setup!</h1>
             <p className="sub">
               Just answer 3 questions and we'll put together an app stack that fits
